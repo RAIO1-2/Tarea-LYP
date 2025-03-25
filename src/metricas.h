@@ -3,7 +3,6 @@
 
 #include "estructuras.h"
 
-// Declaración de todas las métricas (aunque estén vacías todavía)
 char* pizza_mas_vendida(int*, struct Pedido*);
 char* pizza_menos_vendida(int*, struct Pedido*);
 char* fecha_mas_dinero(int*, struct Pedido*);

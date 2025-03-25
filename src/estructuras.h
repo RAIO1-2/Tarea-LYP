@@ -1,12 +1,12 @@
 #ifndef ESTRUCTURAS_H
 #define ESTRUCTURAS_H
 
-// Estructura para representar cada línea del archivo CSV
+// Estructura que representa una línea del archivo CSV
 struct Pedido {
-    int pizza_id;
-    int order_id;
+    float pizza_id;
+    float order_id;
     char pizza_name_id[64];
-    int cantidad;
+    float cantidad;
     char fecha[16];
     char hora[16];
     float precio_unitario;
