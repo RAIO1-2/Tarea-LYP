@@ -1,0 +1,13 @@
+# Ignorar binarios del ejecutable
+app1
+app1.exe
+
+# Ignorar carpeta de compilación
+cmake-build-debug/
+
+# Ignorar archivos de entorno de desarrollo
+.idea/
+
+# Ignorar archivos temporales
+*.log
+*.txt
