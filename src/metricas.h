@@ -3,15 +3,15 @@
 
 #include "estructuras.h"
 
-char* pizza_mas_vendida(int*, struct Pedido*);
-char* pizza_menos_vendida(int*, struct Pedido*);
-char* fecha_mas_dinero(int*, struct Pedido*);
-char* fecha_menos_dinero(int*, struct Pedido*);
-char* fecha_mas_pizzas(int*, struct Pedido*);
-char* fecha_menos_pizzas(int*, struct Pedido*);
-char* promedio_por_orden(int*, struct Pedido*);
-char* promedio_por_dia(int*, struct Pedido*);
-char* ingrediente_mas_vendido(int*, struct Pedido*);
-char* pizzas_por_categoria(int*, struct Pedido*);
+// Firma general de las funciones de métricas
+typedef char* (*FuncionMetrica)(int*, Order*);
 
-#endif
+// Declaraciones de las funciones para cada métrica
+char* pms(int *size, Order *orders);   // Pizza más vendida
+char* pls(int *size, Order *orders);   // Pizza menos vendida
+char* apo(int *size, Order *orders);   // Promedio de pizzas por orden
+char* ims(int *size, Order *orders);   // Ingrediente más vendido
+
+// Puedes agregar más aquí: dms, dls, hp, etc.
+
+#endif // METRICAS_H

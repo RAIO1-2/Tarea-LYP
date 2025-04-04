@@ -1,94 +1,151 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
-#include "estructuras.h"
 #include "metricas.h"
 
-#define MAX_PIZZAS 200
+// Retorna el nombre de la pizza más vendida
+char* pms(int *size, Order *orders) {
+    // Contar las ventas por pizza_name_id
+    typedef struct {
+        char nombre[MAX_STRING_LENGTH];
+        int cantidad;
+    } PizzaCount;
 
-// Estructura interna para contar ventas por pizza
-typedef struct {
-    char nombre[64];
-    float cantidad_total;
-} PizzaContador;
+    PizzaCount conteo[MAX_ORDERS];
+    int total = 0;
 
-// Función para buscar índice de pizza en arreglo de contadores
-int buscar_pizza(PizzaContador* lista, int len, const char* nombre) {
-    for (int i = 0; i < len; i++) {
-        if (strcmp(lista[i].nombre, nombre) == 0) {
-            return i;
+    for (int i = 0; i < *size; i++) {
+        int encontrado = 0;
+        for (int j = 0; j < total; j++) {
+            if (strcmp(conteo[j].nombre, orders[i].pizza_name_id) == 0) {
+                conteo[j].cantidad += orders[i].quantity;
+                encontrado = 1;
+                break;
+            }
         }
-    }
-    return -1;
-}
-
-// -------- MÉTRICA: pizza más vendida --------
-char* pizza_mas_vendida(int* n, struct Pedido* pedidos) {
-    PizzaContador pizzas[MAX_PIZZAS];
-    int total_pizzas = 0;
-
-    // Recorremos todos los pedidos
-    for (int i = 0; i < *n; i++) {
-        char* nombre = pedidos[i].nombre;
-        float cantidad = pedidos[i].cantidad;
-
-        int idx = buscar_pizza(pizzas, total_pizzas, nombre);
-
-        if (idx == -1) {
-            // Nueva pizza, agregar al arreglo
-            strncpy(pizzas[total_pizzas].nombre, nombre, 64);
-            pizzas[total_pizzas].cantidad_total = cantidad;
-            total_pizzas++;
-        } else {
-            // Ya existe, sumar cantidad
-            pizzas[idx].cantidad_total += cantidad;
+        if (!encontrado) {
+            strcpy(conteo[total].nombre, orders[i].pizza_name_id);
+            conteo[total].cantidad = orders[i].quantity;
+            total++;
         }
     }
 
-    // Buscar pizza con mayor cantidad
-    int indice_mayor = 0;
-    for (int i = 1; i < total_pizzas; i++) {
-        if (pizzas[i].cantidad_total > pizzas[indice_mayor].cantidad_total) {
-            indice_mayor = i;
+    // Buscar la más vendida
+    int max = 0;
+    char *resultado = malloc(MAX_STRING_LENGTH);
+    strcpy(resultado, conteo[0].nombre);
+
+    for (int i = 1; i < total; i++) {
+        if (conteo[i].cantidad > max) {
+            max = conteo[i].cantidad;
+            strcpy(resultado, conteo[i].nombre);
         }
     }
-
-    // Preparar el string de salida
-    char* resultado = malloc(128);
-    snprintf(resultado, 128, "Pizza más vendida: %s (vendida %.0f veces)",
-             pizzas[indice_mayor].nombre,
-             pizzas[indice_mayor].cantidad_total);
 
     return resultado;
 }
 
-// --------- MÉTRICA: pizza menos vendida (placeholder) ---------
-char* pizza_menos_vendida(int* n, struct Pedido* pedidos) {
-    return strdup("Pizza menos vendida: (no implementado aún)");
+// Retorna la pizza menos vendida
+char* pls(int *size, Order *orders) {
+    typedef struct {
+        char nombre[MAX_STRING_LENGTH];
+        int cantidad;
+    } PizzaCount;
+
+    PizzaCount conteo[MAX_ORDERS];
+    int total = 0;
+
+    for (int i = 0; i < *size; i++) {
+        int encontrado = 0;
+        for (int j = 0; j < total; j++) {
+            if (strcmp(conteo[j].nombre, orders[i].pizza_name_id) == 0) {
+                conteo[j].cantidad += orders[i].quantity;
+                encontrado = 1;
+                break;
+            }
+        }
+        if (!encontrado) {
+            strcpy(conteo[total].nombre, orders[i].pizza_name_id);
+            conteo[total].cantidad = orders[i].quantity;
+            total++;
+        }
+    }
+
+    // Buscar la menos vendida
+    int min = conteo[0].cantidad;
+    char *resultado = malloc(MAX_STRING_LENGTH);
+    strcpy(resultado, conteo[0].nombre);
+
+    for (int i = 1; i < total; i++) {
+        if (conteo[i].cantidad < min) {
+            min = conteo[i].cantidad;
+            strcpy(resultado, conteo[i].nombre);
+        }
+    }
+
+    return resultado;
 }
 
-// Agrega aquí el resto de métricas cuando estés listo...
-char* fecha_mas_dinero(int* n, struct Pedido* pedidos) {
-    return strdup("Fecha con más dinero: (no implementado aún)");
+// Promedio de pizzas por orden (sumar todas y dividir por número de órdenes)
+char* apo(int *size, Order *orders) {
+    int suma = 0;
+    int total_ordenes = 0;
+
+    char ult_id[MAX_STRING_LENGTH] = "";
+
+    for (int i = 0; i < *size; i++) {
+        suma += orders[i].quantity;
+        if (strcmp(orders[i].order_id, ult_id) != 0) {
+            total_ordenes++;
+            strcpy(ult_id, orders[i].order_id);
+        }
+    }
+
+    float promedio = (float)suma / total_ordenes;
+
+    char *resultado = malloc(50);
+    snprintf(resultado, 50, "Promedio por orden: %.2f", promedio);
+    return resultado;
 }
-char* fecha_menos_dinero(int* n, struct Pedido* pedidos) {
-    return strdup("Fecha con menos dinero: (no implementado aún)");
-}
-char* fecha_mas_pizzas(int* n, struct Pedido* pedidos) {
-    return strdup("Fecha con más pizzas: (no implementado aún)");
-}
-char* fecha_menos_pizzas(int* n, struct Pedido* pedidos) {
-    return strdup("Fecha con menos pizzas: (no implementado aún)");
-}
-char* promedio_por_orden(int* n, struct Pedido* pedidos) {
-    return strdup("Promedio por orden: (no implementado aún)");
-}
-char* promedio_por_dia(int* n, struct Pedido* pedidos) {
-    return strdup("Promedio por día: (no implementado aún)");
-}
-char* ingrediente_mas_vendido(int* n, struct Pedido* pedidos) {
-    return strdup("Ingrediente más vendido: (no implementado aún)");
-}
-char* pizzas_por_categoria(int* n, struct Pedido* pedidos) {
-    return strdup("Pizzas por categoría: (no implementado aún)");
+
+// Ingrediente más vendido
+char* ims(int *size, Order *orders) {
+    typedef struct {
+        char nombre[MAX_STRING_LENGTH];
+        int cantidad;
+    } IngredienteCount;
+
+    IngredienteCount conteo[200];
+    int total = 0;
+
+    for (int i = 0; i < *size; i++) {
+        for (int j = 0; j < orders[i].num_ingredients; j++) {
+            int encontrado = 0;
+            for (int k = 0; k < total; k++) {
+                if (strcmp(conteo[k].nombre, orders[i].ingredients[j]) == 0) {
+                    conteo[k].cantidad += orders[i].quantity;
+                    encontrado = 1;
+                    break;
+                }
+            }
+            if (!encontrado) {
+                strcpy(conteo[total].nombre, orders[i].ingredients[j]);
+                conteo[total].cantidad = orders[i].quantity;
+                total++;
+            }
+        }
+    }
+
+    int max = 0;
+    char *resultado = malloc(MAX_STRING_LENGTH);
+    strcpy(resultado, conteo[0].nombre);
+
+    for (int i = 1; i < total; i++) {
+        if (conteo[i].cantidad > max) {
+            max = conteo[i].cantidad;
+            strcpy(resultado, conteo[i].nombre);
+        }
+    }
+
+    return resultado;
 }

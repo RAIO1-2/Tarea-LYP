@@ -3,7 +3,11 @@
 
 #include "estructuras.h"
 
-// Declaración de la función que carga el CSV
-struct Pedido* leer_csv(const char* ruta, int* cantidad);
+// Carga las órdenes desde un archivo CSV.
+// Parámetros:
+// - nombre_archivo: ruta al archivo CSV (ej: "datos/ventas.csv")
+// - arreglo_orders: arreglo donde se almacenarán las órdenes leídas
+// Retorna la cantidad de órdenes leídas.
+int cargar_ordenes_csv(const char *nombre_archivo, Order arreglo_orders[]);
 
-#endif
+#endif // LECTOR_CSV_H

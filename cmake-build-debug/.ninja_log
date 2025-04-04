@@ -1,15 +1,7 @@
 # ninja log v6
-32	447	7646442881480410	build.ninja	b717d5ee4f0cf1db
-2	1908	7646441317230437	CMakeFiles/Tarea_1.dir/src/principal.c.obj	29d0521b0094620d
-2	333	7646442881480410	build.ninja	b717d5ee4f0cf1db
-5	164	7646442881943005	CMakeFiles/Tarea_1.dir/src/lector_csv.c.obj	eb602a5269b92665
-49	180	7646442882382331	CMakeFiles/Tarea_1.dir/src/utilidades.c.obj	a6f6a7037da876af
-22	200	7646442882111324	CMakeFiles/Tarea_1.dir/src/metricas.c.obj	c5290c7b3f851c16
-201	379	7646442883896373	Tarea_1.exe	195a5da6c6961aea
-4	186	7646448095395672	CMakeFiles/Tarea_1.dir/src/principal.c.obj	29d0521b0094620d
-24	211	7646448095582580	CMakeFiles/Tarea_1.dir/src/lector_csv.c.obj	eb602a5269b92665
-45	217	7646448095803687	CMakeFiles/Tarea_1.dir/src/metricas.c.obj	c5290c7b3f851c16
-218	409	7646448097525392	Tarea_1.exe	195a5da6c6961aea
+2	333	7654912570812919	build.ninja	b717d5ee4f0cf1db
 5	182	7646450820767921	CMakeFiles/Tarea_1.dir/src/principal.c.obj	29d0521b0094620d
-26	203	7646450821011886	CMakeFiles/Tarea_1.dir/src/metricas.c.obj	c5290c7b3f851c16
 203	412	7646450822784520	Tarea_1.exe	195a5da6c6961aea
+24	211	7646448095582580	CMakeFiles/Tarea_1.dir/src/lector_csv.c.obj	eb602a5269b92665
+49	180	7646442882382331	CMakeFiles/Tarea_1.dir/src/utilidades.c.obj	a6f6a7037da876af
+26	203	7646450821011886	CMakeFiles/Tarea_1.dir/src/metricas.c.obj	c5290c7b3f851c16
